@@ -6,7 +6,7 @@ const bookSchema = mongoose.Schema({
         required: true
     },
     desc:String,
-    authodId:{
+    authorId:{
         type: mongoose.Types.ObjectId,
         ref: 'Author'
     },

@@ -8,12 +8,14 @@ const bookSchema = require('../schemas/bookSchema');
 const Book = mongoose.model('Book', bookSchema);
 
 mongoose.model('Publisher', require('../schemas/publisherSchema'));
+mongoose.model('Author', require('../schemas/authorSchema'));
 
 
 //get all books
 bookDirRoute.get('/',async (req, res)=>{
     const allBooks = await Book.find()
         .populate('publisherId', '-books')
+        .populate('authorId', '-__v')
         .select({
             __v: 0
         });

@@ -27,17 +27,19 @@ adminRoute.post('/', async (req, res)=>{
                 console.log(err);
             }
             else{
-                await Author.updateOne({ _id: req.body.authorId}, {
+                
+                Promise.all([Author.updateOne({ _id: req.body.authorId}, {
                     $push:{
                         books: data._id
                     }
-                });
+                }),
+                    Publisher.updateOne({ _id: req.body.publisherId}, {
+                        $push:{
+                            books: data._id
+                        }
+                    })
+                ]);
 
-                await Publisher.updateOne({ _id: req.body.publisherId}, {
-                    $push:{
-                        books: data._id
-                    }
-                });
                 res.status(200).json({
                     message: data
                 })
